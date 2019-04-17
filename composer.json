@@ -1,0 +1,25 @@
+{
+    "name": "wodrow/yii2wconf",
+    "description": "my config component",
+    "keywords": [
+        "config"
+    ],
+    "type": "yii2-extension",
+    "require": {
+        "php": ">=5.4",
+        "yiisoft/yii2": ">=2.0.0"
+    },
+    "authors": [
+        {
+            "name": "wodrow",
+            "email": "wodrow451611cv@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "wodrow\\yii2wconf\\": "src/"
+        }
+    }
+}
