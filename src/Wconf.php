@@ -37,7 +37,8 @@ class Wconf extends ActiveRecord
      */
     public static function tableName()
     {
-        return self::$tableName;
+        return '{{%ww_config}}';
+//        return self::$tableName;
     }
 
     /**
