@@ -23,22 +23,12 @@ use Yii;
  */
 class Wconf extends ActiveRecord
 {
-    public $db = 'db';
-    public $tableName = '{{%ww_config}}';
-
-    public static function getDb()
-    {
-        $db = self::$db;
-        return Yii::$app->get($db);
-    }
-
     /**
      * {@inheritdoc}
      */
     public static function tableName()
     {
         return '{{%ww_config}}';
-//        return self::$tableName;
     }
 
     /**
