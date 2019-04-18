@@ -2,60 +2,20 @@
 /**
  * Created by PhpStorm.
  * User: wodrow
- * Date: 19-4-17
- * Time: 下午4:03
+ * Date: 19-4-18
+ * Time: 上午8:38
  */
 
 namespace wodrow\yii2wconf;
 
-use yii\db\ActiveRecord;
-use Yii;
 
-/**
- * This is the model class for table "{{%ww_config}}".
- *
- * @property int $id
- * @property string $k
- * @property int $v_type
- * @property string $v
- * @property string $group
- * @property int $status
- */
-class Wconf extends ActiveRecord
+use wodrow\yii2wconf\models\WwConfig;
+
+class Wconf extends WwConfig
 {
-    /**
-     * {@inheritdoc}
-     */
-    public static function tableName()
-    {
-        return '{{%ww_config}}';
-    }
+    const VT_INT = 1;
+    const VT_STR = 2;
+    const VT_TEXT = 3;
 
-    /**
-     * {@inheritdoc}
-     */
-    public function rules()
-    {
-        return [
-            [['k', 'v_type', 'status'], 'required'],
-            [['v_type', 'status'], 'integer'],
-            [['v'], 'string'],
-            [['k', 'group'], 'string', 'max' => 50],
-        ];
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function attributeLabels()
-    {
-        return [
-            'id' => Yii::t('app', 'ID'),
-            'k' => Yii::t('app', 'K'),
-            'v_type' => Yii::t('app', 'V Type'),
-            'v' => Yii::t('app', 'V'),
-            'group' => Yii::t('app', 'Group'),
-            'status' => Yii::t('app', 'Status'),
-        ];
-    }
+    const STATUS_ACTIVE = 10;
 }
