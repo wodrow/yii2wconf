@@ -9,6 +9,7 @@
 namespace wodrow\yii2wconf;
 
 
+use function GuzzleHttp\Psr7\str;
 use wodrow\yii2wconf\models\WwConfig;
 
 class Wconf extends WwConfig
@@ -30,7 +31,7 @@ class Wconf extends WwConfig
             $m->v_type = self::VT_STR;
         }
         $m->status = self::STATUS_ACTIVE;
-        $m->v = $v;
+        $m->v = (string)$v;
         return $m->save();
     }
 
@@ -42,6 +43,14 @@ class Wconf extends WwConfig
         }
         if ($m->status != self::STATUS_ACTIVE){
             return null;
+        }
+        switch ($m->v_type){
+            case self::VT_INT:
+                $m->v = (integer)$m->v;
+                break;
+            default:
+                $m->v = (string)$m->v;
+                break;
         }
         return $m->v;
     }
