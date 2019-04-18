@@ -21,14 +21,14 @@ class Wconf extends WwConfig
     const STATUS_ACTIVE = 10;
     const STATUS_DEL = -10;
 
-    public static function set($k, $v, $group = '')
+    public static function set($k, $v, $group = '', $vt = self::VT_STR)
     {
         $m = self::findOne(['k' => $k, 'group' => $group]);
         if (!$m){
             $m = new static();
             $m->k = $k;
             $m->group = $group;
-            $m->v_type = self::VT_STR;
+            $m->v_type = $vt;
         }
         $m->status = self::STATUS_ACTIVE;
         $m->v = (string)$v;
