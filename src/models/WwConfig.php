@@ -20,6 +20,7 @@ use Yii;
  * @property string $v
  * @property string $group
  * @property int $status
+ * @property string $desc
  */
 class WwConfig extends ActiveRecord
 {
@@ -40,7 +41,7 @@ class WwConfig extends ActiveRecord
             [['k', 'v_type', 'status'], 'required'],
             [['v_type', 'status'], 'integer'],
             [['v'], 'string'],
-            [['k', 'group'], 'string', 'max' => 50],
+            [['k', 'group', 'desc'], 'string', 'max' => 50],
         ];
     }
 
@@ -56,6 +57,7 @@ class WwConfig extends ActiveRecord
             'v' => Yii::t('app', 'V'),
             'group' => Yii::t('app', 'Group'),
             'status' => Yii::t('app', 'Status'),
+            'desc' => Yii::t('app', 'Desc'),
         ];
     }
 }
