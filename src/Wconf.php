@@ -9,7 +9,6 @@
 namespace wodrow\yii2wconf;
 
 
-use function GuzzleHttp\Psr7\str;
 use wodrow\yii2wconf\models\WwConfig;
 
 class Wconf extends WwConfig
@@ -29,9 +28,11 @@ class Wconf extends WwConfig
             $m->k = $k;
             $m->group = $group;
             $m->v_type = $vt;
+            $m->created_at = time();
         }
         $m->status = self::STATUS_ACTIVE;
         $m->v = (string)$v;
+        $m->updated_at = time();
         return $m->save();
     }
 
