@@ -43,6 +43,7 @@ class WwConfig extends \yii\db\ActiveRecord
             [['v_type', 'status', 'created_at', 'updated_at'], 'integer'],
             [['v'], 'string'],
             [['k', 'group', 'desc'], 'string', 'max' => 50],
+            [['k', 'group'], 'unique', 'targetAttribute' => ['k', 'group']],
         ];
     }
 
