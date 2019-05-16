@@ -20,6 +20,23 @@ class Wconf extends WwConfig
     const STATUS_ACTIVE = 10;
     const STATUS_DEL = -10;
 
+    public static function getVts()
+    {
+        return [
+            self::VT_STR => "字符串",
+            self::VT_INT=> "整数",
+            self::VT_TEXT => "长文本",
+        ];
+    }
+
+    public static function getStatus()
+    {
+        return [
+            self::STATUS_ACTIVE => "正常",
+            self::STATUS_DEL => "已删除",
+        ];
+    }
+
     public static function set($k, $v, $group = '', $vt = self::VT_STR)
     {
         $m = self::findOne(['k' => $k, 'group' => $group]);
