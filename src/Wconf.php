@@ -10,36 +10,13 @@ namespace wodrow\yii2wconf;
 
 
 use wodrow\yii2wconf\models\WwConfig;
+use yii\base\Component;
 
-class Wconf extends WwConfig
+class Wconf extends Component
 {
-    const VT_STR = 1;
-    const VT_INT = 2;
-    const VT_TEXT = 3;
-
-    const STATUS_ACTIVE = 10;
-    const STATUS_DEL = -10;
-
-    public static function getVts()
+    public static function set($k, $v, $group = '', $vt = WwConfig::VT_STR)
     {
-        return [
-            self::VT_STR => "字符串",
-            self::VT_INT=> "整数",
-            self::VT_TEXT => "长文本",
-        ];
-    }
-
-    public static function getStatus()
-    {
-        return [
-            self::STATUS_ACTIVE => "正常",
-            self::STATUS_DEL => "已删除",
-        ];
-    }
-
-    public static function set($k, $v, $group = '', $vt = self::VT_STR)
-    {
-        $m = self::findOne(['k' => $k, 'group' => $group]);
+        $m = WwConfig::findOne(['k' => $k, 'group' => $group]);
         if (!$m){
             $m = new static();
             $m->k = $k;
@@ -47,7 +24,7 @@ class Wconf extends WwConfig
             $m->v_type = $vt;
             $m->created_at = time();
         }
-        $m->status = self::STATUS_ACTIVE;
+        $m->status = WwConfig::STATUS_ACTIVE;
         $m->v = (string)$v;
         $m->updated_at = time();
         return $m->save();
@@ -55,15 +32,15 @@ class Wconf extends WwConfig
 
     public static function get($k, $group = '')
     {
-        $m = self::findOne(['k' => $k, 'group' => $group]);
+        $m = WwConfig::findOne(['k' => $k, 'group' => $group]);
         if (!$m){
             return null;
         }
-        if ($m->status != self::STATUS_ACTIVE){
+        if ($m->status != WwConfig::STATUS_ACTIVE){
             return null;
         }
         switch ($m->v_type){
-            case self::VT_INT:
+            case WwConfig::VT_INT:
                 $m->v = (integer)$m->v;
                 break;
             default:
@@ -75,9 +52,9 @@ class Wconf extends WwConfig
 
     public static function del($k, $group = '')
     {
-        $m = self::findOne(['k' => $k, 'group' => $group]);
+        $m = WwConfig::findOne(['k' => $k, 'group' => $group]);
         if ($m){
-            $m->status = self::STATUS_DEL;
+            $m->status = WwConfig::STATUS_DEL;
             return $m->save();
         }else{
             return true;

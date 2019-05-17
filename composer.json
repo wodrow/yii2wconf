@@ -6,8 +6,9 @@
     ],
     "type": "yii2-extension",
     "require": {
-        "php": ">=5.4",
-        "yiisoft/yii2": "^2.0.17"
+        "php": ">=7.1",
+        "yiisoft/yii2": "^2.0.18",
+        "wodrow/yii2wtools": "^0.1.0"
     },
     "authors": [
         {

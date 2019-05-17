@@ -1,50 +1,70 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: wodrow
- * Date: 19-4-17
- * Time: 下午4:03
- */
-
 namespace wodrow\yii2wconf\models;
 
 use Yii;
+use yii\helpers\ArrayHelper;
+use yii\behaviors\BlameableBehavior;
+use yii\behaviors\TimestampBehavior;
+use wodrow\yii2wtools\behaviors\Uuid;
 
 /**
  * This is the model class for table "{{%ww_config}}".
- *
- * @property string $id
- * @property string $k 键
- * @property int $v_type
- * @property string $v 值
- * @property string $group
- * @property int $status
- * @property string $desc
- * @property int $created_at
- * @property int $updated_at
  */
-class WwConfig extends \yii\db\ActiveRecord
+class WwConfig extends \wodrow\yii2wconf\models\tables\WwConfig
 {
-    /**
-     * {@inheritdoc}
-     */
-    public static function tableName()
-    {
-        return '{{%ww_config}}';
-    }
+    const VT_STR = 1;
+    const VT_INT = 2;
+    const VT_TEXT = 3;
 
-    /**
-     * {@inheritdoc}
-     */
-    public function rules()
+    const STATUS_ACTIVE = 10;
+    const STATUS_DEL = -10;
+
+    public static function getVts()
     {
         return [
-            [['k', 'v_type', 'status', 'created_at', 'updated_at'], 'required'],
-            [['v_type', 'status', 'created_at', 'updated_at'], 'integer'],
-            [['v'], 'string'],
-            [['k', 'group', 'desc'], 'string', 'max' => 50],
-            [['k', 'group'], 'unique', 'targetAttribute' => ['k', 'group']],
+            self::VT_STR => "字符串",
+            self::VT_INT=> "整数",
+            self::VT_TEXT => "长文本",
         ];
+    }
+
+    public static function getStatus()
+    {
+        return [
+            self::STATUS_ACTIVE => "正常",
+            self::STATUS_DEL => "已删除",
+        ];
+    }
+
+    public function behaviors()
+    {
+        return ArrayHelper::merge(parent::behaviors(), [
+            'timestamp' => [
+                'class' => TimestampBehavior::class,
+                'createdAtAttribute' => false,
+                'updatedAtAttribute' => false,
+            ],
+            'blameable' => [
+                'class' => BlameableBehavior::class,
+                'createdByAttribute' => false,
+                'updatedByAttribute' => false,
+            ],
+            /*'uuid' => [
+                'class' => Uuid::class,
+                'column' => false,
+            ],*/
+        ]);
+    }
+
+    public function rules()
+    {
+        $rules = parent::rules();
+        /*foreach ($rules as $k => $v) {
+            if ($v[1] == 'required'){
+                $rules[$k][0] = array_diff($rules[$k][0], ['created_at', 'updated_at', 'created_by', 'updated_by']);
+            }
+        }*/
+        return ArrayHelper::merge($rules, []);
     }
 
     /**
@@ -52,16 +72,7 @@ class WwConfig extends \yii\db\ActiveRecord
      */
     public function attributeLabels()
     {
-        return [
-            'id' => Yii::t('app', 'ID'),
-            'k' => Yii::t('app', '键'),
-            'v_type' => Yii::t('app', 'V Type'),
-            'v' => Yii::t('app', '值'),
-            'group' => Yii::t('app', 'Group'),
-            'status' => Yii::t('app', 'Status'),
-            'desc' => Yii::t('app', 'Desc'),
-            'created_at' => Yii::t('app', 'Created At'),
-            'updated_at' => Yii::t('app', 'Updated At'),
-        ];
+        $attributeLabels = parent::attributeLabels();
+        return ArrayHelper::merge($attributeLabels, []);
     }
 }
