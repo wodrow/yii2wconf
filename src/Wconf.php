@@ -18,7 +18,7 @@ class Wconf extends Component
     {
         $m = WwConfig::findOne(['k' => $k, 'group' => $group]);
         if (!$m){
-            $m = new static();
+            $m = new WwConfig();
             $m->k = $k;
             $m->group = $group;
             $m->v_type = $vt;
